@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Concilia23 · CEJUSC do TRT-23 — sistema demonstrativo de apoio à triagem conciliatória, com decisão humana." />
+  <title>Concilia23 · CEJUSC | Justiça do Trabalho — TRT-23</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main-workspace">Pular para o conteúdo</a>
+
+  <header class="portal-header">
+    <div class="portal-identity">
+      <a class="portal-brand" href="#" data-view="triage" aria-label="Justiça do Trabalho, início">
+        <img src="assets/justica-do-trabalho-csjt.png" alt="Justiça do Trabalho — Conselho Superior da Justiça do Trabalho" />
+      </a>
+      <div class="portal-system-name">
+        <strong>Concilia23 <span>· CEJUSC</span></strong>
+        <small>Sistema de apoio à triagem conciliatória</small>
+      </div>
+    </div>
+    <nav class="portal-nav" aria-label="Navegação do sistema">
+      <button type="button" data-view="triage" class="portal-nav-item active">Triagem de processos</button>
+      <button type="button" data-view="agenda" class="portal-nav-item">Pauta <span id="agenda-count" class="portal-nav-count">0</span></button>
+    </nav>
+    <span class="portal-environment"><i aria-hidden="true"></i> Ambiente demonstrativo</span>
+  </header>
+
+  <div class="app-shell">
+    <aside class="icon-rail" aria-label="Navegação principal">
+      <div class="rail-brand" aria-label="Concilia23">
+        <span aria-hidden="true">C23</span>
+      </div>
+
+      <nav class="rail-nav" aria-label="Atalhos do sistema">
+        <button class="rail-btn active" id="btn-toggle-query" type="button" aria-label="Ocultar painel de consulta" aria-expanded="true" title="Ocultar painel de consulta">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h7"/></svg>
+        </button>
+      </nav>
+
+      <div class="rail-footer">
+        <button class="rail-btn" id="btn-about" type="button" aria-label="Sobre o protótipo" title="Sobre">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <aside class="query-sidebar" id="query-sidebar" aria-labelledby="query-title">
+      <header class="query-branding">
+        <p>TRT DA 23ª REGIÃO · CEJUSC</p>
+        <h1>Concilia23</h1>
+        <span>Mesa Inteligente de Triagem</span>
+      </header>
+
+      <div class="prototype-flag">
+        <span class="flag-dot"></span>
+        <div><strong id="data-source-title">Protótipo demonstrativo</strong><small id="data-source-label">Dados inteiramente fictícios</small></div>
+      </div>
+
+      <section class="query-section" id="query-section">
+        <div class="section-kicker">01 · Definir consulta</div>
+        <div class="sidebar-title-row">
+          <h2 id="query-title">Monte sua consulta</h2>
+          <button id="btn-limpar" class="text-btn clear-consultation" type="button">Limpar consulta</button>
+        </div>
+
+        <div class="field dark-field">
+          <label for="tema">Tema ou assunto</label>
+          <div class="search-field">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m16 16 4 4"/></svg>
+            <input id="tema" type="search" list="theme-suggestions" placeholder="Ex.: assédio moral" autocomplete="off" />
+            <button id="btn-buscar-tema" class="search-submit" type="button" aria-label="Buscar tema">Buscar</button>
+          </div>
+          <datalist id="theme-suggestions"></datalist>
+          <small>Busca no assunto e nos trechos disponíveis para consulta.</small>
+        </div>
+
+        <div class="quick-themes" aria-labelledby="quick-themes-label">
+          <div class="quick-themes-heading"><span id="quick-themes-label">Temas rápidos</span><button id="btn-manage-themes" class="text-btn" type="button">Gerenciar temas</button></div>
+          <div id="quick-theme-list" class="quick-theme-list"></div>
+        </div>
+
+        <fieldset class="signal-group">
+          <legend>Critérios de conciliação</legend>
+          <p class="group-helper">Os critérios marcados serão aplicados em conjunto ao analisar os processos.</p>
+          <button id="btn-clear-criteria" class="clear-query-part" type="button">Limpar critérios</button>
+
+          <label class="signal-option">
+            <input type="checkbox" class="criterio" value="historicoAcordos" />
+            <span class="signal-toggle" aria-hidden="true"></span>
+            <span class="signal-copy"><strong>Histórico de acordos</strong><small>Há acordos anteriores envolvendo a reclamada</small></span>
+          </label>
+          <label class="signal-option">
+            <input type="checkbox" class="criterio" value="recorrenciaReclamado" />
+            <span class="signal-toggle" aria-hidden="true"></span>
+            <span class="signal-copy"><strong>Recorrência do reclamado</strong><small>Reclamado aparece em outros acordos da fonte consultada</small></span>
+          </label>
+          <label class="signal-option">
+            <input type="checkbox" class="criterio" value="valorModerado" />
+            <span class="signal-toggle" aria-hidden="true"></span>
+            <span class="signal-copy"><strong>Valor até R$ 50 mil</strong><small>Faixa demonstrativa para a consulta</small></span>
+          </label>
+          <label class="signal-option">
+            <input type="checkbox" class="criterio" value="faseConhecimento" />
+            <span class="signal-toggle" aria-hidden="true"></span>
+            <span class="signal-copy"><strong>Fase de conhecimento</strong><small>Processos atualmente nesta fase</small></span>
+          </label>
+        </fieldset>
+
+        <details class="advanced-filters" open>
+          <summary>Filtros detalhados <span id="active-filter-count">0 ativos</span></summary>
+          <div id="advanced-filters" class="advanced-filter-groups"></div>
+          <button id="btn-clear-filters" class="clear-filters" type="button">Limpar filtros detalhados</button>
+          <p class="filter-clear-note">Esta ação mantém tema e critérios de conciliação.</p>
+          <div id="discarded-controls" class="discarded-controls" hidden>
+            <span><strong id="discarded-count">0</strong> processo(s) descartado(s)</span>
+            <button id="btn-restore-discarded" type="button">Reincluir</button>
+          </div>
+        </details>
+
+        <div class="active-query">
+          <span class="active-query-label">Consulta em edição</span>
+          <div id="active-query-chips" class="active-query-chips"><span class="query-placeholder">Nenhum critério definido</span></div>
+        </div>
+
+        <button id="btn-pesquisar" class="analyze-btn" type="button">
+          <span>Analisar processos</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M14 7l5 5-5 5"/></svg>
+        </button>
+
+        <p class="human-note">O sistema organiza evidências. A decisão final permanece com o profissional responsável.</p>
+      </section>
+    </aside>
+
+    <main id="main-workspace" class="workspace-main">
+      <header class="workspace-header">
+        <div>
+          <div class="workspace-eyebrow">02 · Conferir resultados</div>
+          <h2>Seleção Inteligente de Processos para Conciliação</h2>
+          <p>Mesa Inteligente de Triagem para apoiar a análise e a seleção humana.</p>
+        </div>
+        <div class="workspace-actions">
+          <span class="status-chip"><i></i><span id="data-source-status">Demonstração</span></span>
+          <button class="compact-action" id="btn-new-query" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m16 16 4 4"/></svg>
+            Nova consulta
+          </button>
+        </div>
+      </header>
+
+      <section class="query-echo" aria-label="Resumo da consulta">
+        <div>
+          <span>Consulta aplicada</span>
+          <strong id="criteria-text">Nenhum critério informado</strong>
+        </div>
+        <div class="query-echo-side">
+          <strong id="result-count">0 resultados</strong>
+          <span id="selected-inline">0 selecionados</span>
+        </div>
+      </section>
+
+      <div id="status-message" class="status-message info" role="status">
+        <span class="status-icon">i</span>
+        <div><strong>Pronto para analisar</strong><p>Defina um tema, critério de conciliação ou use os filtros detalhados.</p></div>
+      </div>
+
+      <section class="results-section" id="results-section" aria-labelledby="results-title">
+        <div class="results-heading">
+          <div><span class="results-kicker">Processos para conferência</span><h3 id="results-title">Resultados da triagem</h3></div>
+          <p class="results-order-note">Ordem por faixa: Alta → Média → Baixa → Dados insuficientes. Não é probabilidade.</p>
+        </div>
+
+        <div id="empty-state" class="empty-state">
+          <div class="empty-visual" aria-hidden="true"><span></span><span></span><span></span></div>
+          <h4>Comece montando uma consulta</h4>
+          <p>Pesquise um tema, escolha critérios de conciliação ou combine os dois.</p>
+          <button id="btn-empty-focus" type="button">Abrir painel de consulta</button>
+        </div>
+
+        <div id="results-grid" class="results-grid" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <main id="pauta-view" class="pauta-workspace" hidden aria-labelledby="pauta-title">
+      <div class="pauta-page-header">
+        <div>
+          <div class="workspace-eyebrow">02 · Revisão humana</div>
+          <h1 id="pauta-title">Pauta de conciliação</h1>
+          <p>Revise os critérios e os dados de cada processo antes de registrar a decisão.</p>
+        </div>
+        <div class="pauta-page-actions">
+          <button id="btn-export-agenda" class="portal-button secondary" type="button">Exportar pauta (.csv)</button>
+          <button id="btn-clear-agenda" class="portal-button secondary" type="button">Limpar pauta</button>
+        </div>
+      </div>
+      <div class="agenda-disclaimer" role="note">
+        <strong>Encaminhamento demonstrativo</strong>
+        <span>A aprovação abaixo registra somente sua decisão neste navegador. Não envia dados ao CEJUSC ou ao PJe; essa integração não está configurada.</span>
+      </div>
+      <section class="agenda-summary" aria-label="Resumo da pauta">
+        <div><span>Em análise</span><strong id="agenda-review-count">0</strong></div>
+        <div><span>Aprovados pelo usuário</span><strong id="agenda-approved-count">0</strong></div>
+        <div><span>Encaminhamentos demonstrativos</span><strong id="agenda-sent-count">0</strong></div>
+      </section>
+      <div class="agenda-toolbar">
+        <p id="agenda-review-hint">Confira os dados e evidências de cada processo. Você decide quais entram na pauta.</p>
+        <button id="btn-confirm-agenda" class="portal-button primary" type="button" disabled>Registrar aprovados para análise do CEJUSC</button>
+      </div>
+      <div id="agenda-empty" class="agenda-empty">
+        <h2>A pauta está vazia</h2>
+        <p>Na triagem, abra o detalhe de um processo e escolha <strong>Adicionar à pauta</strong> depois de revisar os critérios.</p>
+        <button class="portal-button primary" type="button" data-view="triage">Voltar à triagem</button>
+      </div>
+      <div id="agenda-list" class="agenda-list"></div>
+      <section class="decision-log-panel">
+        <h2>Registro de decisões nesta demonstração</h2>
+        <div id="agenda-log" class="agenda-log"></div>
+      </section>
+    </main>
+
+    <aside id="detail-panel" class="detail-drawer" hidden aria-labelledby="detail-title">
+      <div class="drawer-header">
+        <div><span class="drawer-kicker">03 · Explicabilidade</span><h2 id="detail-title">Por que apareceu?</h2></div>
+        <button id="btn-close-detail" class="drawer-close" type="button" aria-label="Fechar detalhes">×</button>
+      </div>
+
+      <div id="detail-content" class="drawer-content"></div>
+    </aside>
+
+    <dialog id="theme-dialog" class="theme-dialog" aria-labelledby="theme-dialog-title">
+      <div id="theme-dialog-content"></div>
+    </dialog>
+    <div id="drawer-backdrop" class="drawer-backdrop" hidden></div>
+
+    <section id="selection-dock" class="selection-dock" hidden aria-label="Processos selecionados">
+      <div class="selection-dock-title">
+        <span class="selection-icon">✓</span>
+        <div><strong>Seleção atual</strong><small><span id="selected-count-bar">0</span> processo(s) para análise humana</small></div>
+      </div>
+      <div id="selected-mini-list" class="selected-mini-list"></div>
+      <button id="btn-clear-selected" class="dock-clear" type="button">Limpar toda a seleção</button>
+      <button id="btn-review-selected" class="dock-review" type="button">Revisar seleção</button>
+    </section>
+  </div>
+
+  <dialog id="selection-dialog" class="selection-dialog">
+    <div class="dialog-header">
+      <div><span class="dialog-kicker">04 · Seleção humana</span><h2>Processos selecionados</h2></div>
+      <button id="btn-close-selection" class="dialog-close" type="button" aria-label="Fechar revisão">×</button>
+    </div>
+    <p>A seleção representa apenas a escolha do usuário para análise. Não há encaminhamento automático nem integração com o PJe.</p>
+    <div id="selection-review-list" class="selection-review-list"></div>
+    <div class="selection-dialog-actions">
+      <span>Exportação gerada somente com os processos fictícios selecionados nesta sessão.</span>
+      <button id="btn-export-selected" class="export-btn" type="button">Exportar seleção (.csv)</button>
+    </div>
+  </dialog>
+
+  <dialog id="about-dialog" class="about-dialog">
+    <form method="dialog"><button class="dialog-close" aria-label="Fechar">×</button></form>
+    <span class="dialog-kicker">Protótipo demonstrativo</span>
+    <h2>Concilia23</h2>
+    <p>Interface de apoio à seleção de processos para conciliação. A identificação da fonte de dados aparece no painel de consulta. A ferramenta organiza evidências e mantém a decisão com o profissional responsável.</p>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="mock-data.js"></script>
+  <script src="mock-history.js"></script>
+  <script src="data-adapter.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
